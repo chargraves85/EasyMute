@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">EasyMute</string>
+    <string name="mainMuteButton">Mute</string>
+</resources>
