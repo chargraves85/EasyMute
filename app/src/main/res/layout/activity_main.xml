@@ -4,18 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#6f6f6f">
 
-    <Button
-        android:id="@+id/muteToggle"
-        android:layout_width="354dp"
-        android:layout_height="585dp"
-        android:textSize="34sp"
-        app:cornerRadius="50dp"
+    <ImageView
+        android:id="@+id/isMutedImage"
+        android:layout_width="389dp"
+        android:layout_height="415dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.498"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:srcCompat="@drawable/micopen"
+        android:contentDescription="@string/mute_toggle" />
+
+    <TextView
+        android:id="@+id/isMutedText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/speaking"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/isMutedImage" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

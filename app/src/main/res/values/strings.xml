@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">EasyMute</string>
     <string name="mainMuteButton">Mute</string>
+    <string name="speaking">Speaking</string>
+    <string name="muted">Muted</string>
+    <string name="mute_toggle">Mute Toggle</string>
 </resources>

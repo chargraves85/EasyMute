@@ -4,15 +4,15 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.media.AudioManager
 import android.os.Build
-import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 
-class MuteToggle(private val baseContext: Context, private val button: Button, private val audioManager: AudioManager) {
+class MuteToggle(private val image: ImageView, private val text: TextView, private val audioManager: AudioManager, private val baseContext: Context) {
 
     companion object {
         private const val MODIFY_AUDIO_SETTINGS = 100
@@ -24,16 +24,16 @@ class MuteToggle(private val baseContext: Context, private val button: Button, p
         if (checkSelfPermissionCompat(Manifest.permission.MODIFY_AUDIO_SETTINGS) == PackageManager.PERMISSION_GRANTED) {
             if (audioManager.isMicrophoneMute) {
                 audioManager.isMicrophoneMute = false
-                button.setBackgroundColor(Color.GREEN)
-                button.text = "Speaking"
+                image.setImageResource(R.drawable.micopen)
+                text.setText(R.string.speaking)
             } else {
                 audioManager.isMicrophoneMute = true
-                button.setBackgroundColor(Color.RED)
-                button.text = "Muted"
+                image.setImageResource(R.drawable.micclosed)
+                text.setText(R.string.muted)
             }
         } else {
             // Permission is missing and must be requested.
-            Toast.makeText(this.baseContext, "This app requires permission to modify audio settings.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, "This app requires permission to modify audio settings.", Toast.LENGTH_SHORT).show()
             requestPermissionsCompat(arrayOf(Manifest.permission.MODIFY_AUDIO_SETTINGS),
                 MODIFY_AUDIO_SETTINGS
             )
@@ -43,11 +43,11 @@ class MuteToggle(private val baseContext: Context, private val button: Button, p
     fun unmute() {
         if (checkSelfPermissionCompat(Manifest.permission.MODIFY_AUDIO_SETTINGS) == PackageManager.PERMISSION_GRANTED) {
             audioManager.isMicrophoneMute = false
-            button.setBackgroundColor(Color.GREEN)
-            button.text = "Speaking"
+            image.setImageResource(R.drawable.micopen)
+            text.setText(R.string.speaking)
         } else {
             // Permission is missing and must be requested.
-            Toast.makeText(this.baseContext, "This app requires permission to modify audio settings.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, "This app requires permission to modify audio settings.", Toast.LENGTH_SHORT).show()
             requestPermissionsCompat(arrayOf(Manifest.permission.MODIFY_AUDIO_SETTINGS),
                 MODIFY_AUDIO_SETTINGS
             )
@@ -58,11 +58,11 @@ class MuteToggle(private val baseContext: Context, private val button: Button, p
     fun mute() {
         if (checkSelfPermissionCompat(Manifest.permission.MODIFY_AUDIO_SETTINGS) == PackageManager.PERMISSION_GRANTED) {
             audioManager.isMicrophoneMute = true
-            button.setBackgroundColor(Color.RED)
-            button.text = "Muted"
+            image.setImageResource(R.drawable.micclosed)
+            text.setText(R.string.muted)
         } else {
             // Permission is missing and must be requested.
-            Toast.makeText(this.baseContext, "This app requires permission to modify audio settings.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(baseContext, "This app requires permission to modify audio settings.", Toast.LENGTH_SHORT).show()
             requestPermissionsCompat(arrayOf(Manifest.permission.MODIFY_AUDIO_SETTINGS),
                 MODIFY_AUDIO_SETTINGS
             )
@@ -70,7 +70,7 @@ class MuteToggle(private val baseContext: Context, private val button: Button, p
     }
 
     private fun checkSelfPermissionCompat(permission: String) =
-        ActivityCompat.checkSelfPermission(this.baseContext, permission)
+        ActivityCompat.checkSelfPermission(baseContext, permission)
 
     private fun requestPermissionsCompat(permissionsArray: Array<String>, requestCode: Int) {
         ActivityCompat.requestPermissions(Activity().parent, permissionsArray, requestCode)
