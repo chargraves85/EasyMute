@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.velocicrafted.easymute">
 
+    <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="32" />
+    
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
     <application
@@ -11,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.EasyMute">
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
