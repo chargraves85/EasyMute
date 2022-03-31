@@ -21,18 +21,21 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         val isMutedImage = findViewById<ImageView>(R.id.isMutedImage)
         val audioManager = baseContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val text = findViewById<TextView>(R.id.isMutedText)
         val toggler = MuteToggle(isMutedImage, text, audioManager, baseContext)
         val settingsButton = findViewById<FloatingActionButton>(R.id.settingsButton)
+
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         ProcessLifecycleOwner.get().lifecycle.addObserver(AppLifecycleListener(toggler, window, baseContext))
         isMutedImage.setOnClickListener { toggler.toggleMute() }
         settingsButton.setOnClickListener { goToSettings() }
+
     }
 
-    fun goToSettings() {
+    private fun goToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         startActivity(intent)
         }

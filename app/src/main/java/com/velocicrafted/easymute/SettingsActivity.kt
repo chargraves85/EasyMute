@@ -1,11 +1,12 @@
 package com.velocicrafted.easymute
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
-class SettingsActivity: AppCompatActivity() {
+class SettingsActivity: AppCompatActivity()  {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -14,10 +15,15 @@ class SettingsActivity: AppCompatActivity() {
         backButton.setOnClickListener { goHome() }
     }
 
-    fun goHome() {
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-    }
+    private fun goHome() {
+//        val intent = Intent(this, MainActivity::class.java)
+//        startActivity(intent)
+        val thisActivity = this
+        runBlocking {
+            launch { IAPController(baseContext, thisActivity).startPurchaseFlow() }
+        }
+
+        }
 
 
 }

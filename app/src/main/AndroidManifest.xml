@@ -2,7 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.velocicrafted.easymute">
 
+    <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="32" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:fullBackupOnly="true"
