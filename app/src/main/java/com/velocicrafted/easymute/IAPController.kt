@@ -7,6 +7,8 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat.recreate
 import com.android.billingclient.api.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 
@@ -19,12 +21,15 @@ class IAPController(private val context: Context, private val activity: Activity
         .build()
 
 
-    private fun connectToBilling() {
+    fun connectToBilling() {
 
         billingClient.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
                 if (billingResult.responseCode ==  BillingClient.BillingResponseCode.OK) {
                     Log.v("INAAP", "Billing Connected.")
+                    runBlocking {
+                        launch { startPurchaseFlow() }
+                    }
                 } else {
                     Log.v("INAAP", "Billing unable to connect. ${billingResult.responseCode}")
 
@@ -32,17 +37,13 @@ class IAPController(private val context: Context, private val activity: Activity
             }
 
             override fun onBillingServiceDisconnected() {
-                Log.v("INAPP", "Billing Disconnected.")
-                // Try to restart the connection on the next request to
-                // Google Play by calling the startConnection() method.
+                connectToBilling()
             }
         })
 
     }
 
-    suspend fun startPurchaseFlow() {
-
-        connectToBilling()
+    private suspend fun startPurchaseFlow() {
 
         val skuList = ArrayList<String>()
         skuList.add("premium_upgrade")
@@ -92,12 +93,14 @@ class IAPController(private val context: Context, private val activity: Activity
             }
         } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
             Log.v("INAPP", "User canceled transaction. ${billingResult.responseCode}")
+        } else if  (billingResult.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED){
+            // TODO: handle
         }
     }
 
     private fun handlePurchase(purchase: Purchase) {
 
-        AcknowledgePurchaseResponseListener { billingResult ->
+        val ackListener = AcknowledgePurchaseResponseListener { billingResult ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                 // if purchase is acknowledged
                 // TODO: Grant entitlement to the user. and restart activity
@@ -109,9 +112,19 @@ class IAPController(private val context: Context, private val activity: Activity
 
         if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED) {
             if (!purchase.isAcknowledged) {
-                AcknowledgePurchaseParams.newBuilder()
+                val acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
                     .setPurchaseToken(purchase.purchaseToken)
+                runBlocking {
+                    launch {
+                        val ackPurchaseResult = withContext(Dispatchers.IO) {
+                            billingClient.acknowledgePurchase(acknowledgePurchaseParams.build(), ackListener)
+                        }
+                    }
+                }
             }
         }
+
+        // TODO: BillingClient.queryPurchasesAsync()
+
     }
 }

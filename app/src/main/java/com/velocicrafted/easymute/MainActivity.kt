@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         ProcessLifecycleOwner.get().lifecycle.addObserver(AppLifecycleListener(toggler, window, baseContext))
         isMutedImage.setOnClickListener { toggler.toggleMute() }
         settingsButton.setOnClickListener { goToSettings() }
-
     }
 
     private fun goToSettings() {
