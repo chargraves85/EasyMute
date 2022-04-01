@@ -22,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val settings = applicationContext.getSharedPreferences("Settings", MODE_PRIVATE)
+
         val isMutedImage = findViewById<ImageView>(R.id.isMutedImage)
         val audioManager = baseContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val text = findViewById<TextView>(R.id.isMutedText)
@@ -32,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         ProcessLifecycleOwner.get().lifecycle.addObserver(AppLifecycleListener(toggler, window, baseContext))
         isMutedImage.setOnClickListener { toggler.toggleMute() }
         settingsButton.setOnClickListener { goToSettings() }
+
     }
 
     private fun goToSettings() {

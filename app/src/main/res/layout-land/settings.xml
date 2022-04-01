@@ -76,7 +76,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch5"
+        android:id="@+id/holdToMute"
         android:layout_width="360dp"
         android:layout_height="25dp"
         android:layout_marginTop="16dp"
@@ -88,10 +88,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch4" />
+        app:layout_constraintTop_toBottomOf="@+id/timedUnmute" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch2"
+        android:id="@+id/callLaunchAsk"
         android:layout_width="360dp"
         android:layout_height="25dp"
         android:layout_marginTop="16dp"
@@ -103,10 +103,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch1" />
+        app:layout_constraintTop_toBottomOf="@+id/callLaunchAuto" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch3"
+        android:id="@+id/minimizeMute"
         android:layout_width="360dp"
         android:layout_height="25dp"
         android:layout_marginTop="16dp"
@@ -118,10 +118,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch2" />
+        app:layout_constraintTop_toBottomOf="@+id/callLaunchAsk" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch1"
+        android:id="@+id/callLaunchAuto"
         android:layout_width="360dp"
         android:layout_height="25dp"
         android:layout_marginTop="16dp"
@@ -136,7 +136,7 @@
         app:layout_constraintTop_toBottomOf="@+id/premiumToggle" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switch4"
+        android:id="@+id/timedUnmute"
         android:layout_width="360dp"
         android:layout_height="25dp"
         android:layout_marginTop="16dp"
@@ -148,7 +148,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.097"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch3" />
+        app:layout_constraintTop_toBottomOf="@+id/minimizeMute" />
 
     <TextView
         android:id="@+id/textView4"
@@ -165,7 +165,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -177,7 +177,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -185,7 +185,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.379"
-        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintStart_toEndOf="@+id/rate"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:layout_constraintVertical_bias="0.0" />
 

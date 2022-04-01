@@ -2,8 +2,10 @@ package com.velocicrafted.easymute
 
 import android.app.Activity
 import android.content.Context
+import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.recreate
 import com.android.billingclient.api.*
 import kotlinx.coroutines.Dispatchers
@@ -12,10 +14,11 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 
-class IAPController(private val context: Context, private val activity: Activity) : PurchasesUpdatedListener {
+class IAPController(private val activity: Activity) : PurchasesUpdatedListener, AppCompatActivity() {
 
+    private val settings = activity.applicationContext.getSharedPreferences("Settings", Context.MODE_PRIVATE)
 
-    private var billingClient: BillingClient = BillingClient.newBuilder(context)
+    private var billingClient: BillingClient = BillingClient.newBuilder(activity.applicationContext)
         .setListener(this)
         .enablePendingPurchases()
         .build()
@@ -28,11 +31,12 @@ class IAPController(private val context: Context, private val activity: Activity
                 if (billingResult.responseCode ==  BillingClient.BillingResponseCode.OK) {
                     Log.v("INAAP", "Billing Connected.")
                     runBlocking {
-                        launch { startPurchaseFlow() }
+                        launch {
+                            startPurchaseFlow()
+                        }
                     }
                 } else {
                     Log.v("INAAP", "Billing unable to connect. ${billingResult.responseCode}")
-
                 }
             }
 
@@ -40,7 +44,6 @@ class IAPController(private val context: Context, private val activity: Activity
                 connectToBilling()
             }
         })
-
     }
 
     private suspend fun startPurchaseFlow() {
@@ -94,7 +97,8 @@ class IAPController(private val context: Context, private val activity: Activity
         } else if (billingResult.responseCode == BillingClient.BillingResponseCode.USER_CANCELED) {
             Log.v("INAPP", "User canceled transaction. ${billingResult.responseCode}")
         } else if  (billingResult.responseCode == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED){
-            // TODO: handle
+            settings.edit().putBoolean("premiumEnabled", true).apply()
+            recreate(activity)
         }
     }
 
@@ -103,9 +107,9 @@ class IAPController(private val context: Context, private val activity: Activity
         val ackListener = AcknowledgePurchaseResponseListener { billingResult ->
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                 // if purchase is acknowledged
-                // TODO: Grant entitlement to the user. and restart activity
+                settings.edit().putBoolean("premiumEnabled", true).apply()
 
-                Toast.makeText(context, "Item Purchased", Toast.LENGTH_SHORT).show()
+                Toast.makeText(baseContext, "Item Purchased", Toast.LENGTH_SHORT).show()
                 recreate(activity)
             }
         }
