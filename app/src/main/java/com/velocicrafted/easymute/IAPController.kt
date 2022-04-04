@@ -14,11 +14,11 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 
-class IAPController(private val activity: Activity) : PurchasesUpdatedListener, AppCompatActivity() {
+class IAPController(private val activity: Activity, private val context: Context) : PurchasesUpdatedListener, AppCompatActivity() {
 
-    private val settings = activity.applicationContext.getSharedPreferences("Settings", Context.MODE_PRIVATE)
+    private val settings = context.getSharedPreferences("Settings", Context.MODE_PRIVATE)
 
-    private var billingClient: BillingClient = BillingClient.newBuilder(activity.applicationContext)
+    private var billingClient: BillingClient = BillingClient.newBuilder(context)
         .setListener(this)
         .enablePendingPurchases()
         .build()
@@ -109,7 +109,7 @@ class IAPController(private val activity: Activity) : PurchasesUpdatedListener, 
                 // if purchase is acknowledged
                 settings.edit().putBoolean("premiumEnabled", true).apply()
 
-                Toast.makeText(baseContext, "Item Purchased", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Item Purchased", Toast.LENGTH_SHORT).show()
                 recreate(activity)
             }
         }

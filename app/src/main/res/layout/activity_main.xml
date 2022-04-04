@@ -47,19 +47,19 @@
         app:srcCompat="@android:drawable/ic_menu_preferences" />
 
     <SeekBar
-        android:visibility="gone"
-        android:id="@+id/seekBar"
+        android:id="@+id/muteDelay"
         android:layout_width="339dp"
         android:layout_height="16dp"
         android:layout_marginBottom="36dp"
-        android:max="300"
+        android:max="60"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/isMutedImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:visibility="gone"
-        android:id="@+id/textView"
+        android:id="@+id/unmutedTimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
@@ -76,14 +76,14 @@
         android:id="@+id/unmuteTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/_0"
+        android:text="@string/actual_unmute_duration"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/isMutedImage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.352"
-        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintStart_toEndOf="@+id/unmutedTimeText"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

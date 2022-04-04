@@ -28,7 +28,7 @@
         android:contentDescription="@string/mute_toggle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/seekBar"
+        app:layout_constraintStart_toEndOf="@+id/muteDelay"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.401"
         app:srcCompat="@drawable/micopen" />
@@ -46,7 +46,7 @@
         app:layout_constraintTop_toBottomOf="@+id/isMutedImage" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/unmutedTimeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
@@ -55,7 +55,7 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintBottom_toTopOf="@+id/muteDelay"
         app:layout_constraintEnd_toStartOf="@+id/unmuteTime"
         app:layout_constraintHorizontal_bias="0.744"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,18 +68,18 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="100dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/_0"
+        android:text="@string/actual_unmute_duration"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/seekBar"
+        app:layout_constraintBottom_toTopOf="@+id/muteDelay"
         app:layout_constraintEnd_toStartOf="@+id/isMutedImage"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.962" />
 
     <SeekBar
-        android:id="@+id/seekBar"
+        android:id="@+id/muteDelay"
         android:layout_width="335dp"
         android:layout_height="17dp"
         android:layout_marginStart="64dp"
