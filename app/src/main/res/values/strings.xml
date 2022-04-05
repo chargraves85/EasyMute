@@ -4,4 +4,19 @@
     <string name="speaking">Speaking</string>
     <string name="muted">Muted</string>
     <string name="mute_toggle">Mute Toggle</string>
+    <string name="pro_settings">Pro Settings</string>
+    <string name="back">Back</string>
+    <string name="launch_on_call_connection">Launch on call connection</string>
+    <string name="hold_to_unmute">Hold to unmute</string>
+    <string name="allow_mute_when_minimized">Allow mute when minimized</string>
+    <string name="ask_to_launch_on_call_connection">Ask to launch on call connection</string>
+    <string name="enable_pro_features">Enable Pro Features</string>
+    <string name="like_the_app_spread_the_word">Like the app? Spread the word!</string>
+    <string name="rate">Rate</string>
+    <string name="share">Share</string>
+    <string name="enable_timed_unmute">Enable timed unmute</string>
+    <string name="settings">Settings</string>
+    <string name="actual_unmute_duration">0</string>
+    <string name="unmute_duration_sec">Unmute Duration (sec):</string>
+
 </resources>

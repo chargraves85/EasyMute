@@ -3,17 +3,26 @@
     package="com.velocicrafted.easymute">
 
     <uses-sdk android:minSdkVersion="23" android:targetSdkVersion="32" />
-    
+
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
 
     <application
-        android:allowBackup="true"
+
+        android:fullBackupOnly="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.EasyMute">
+        android:theme="@style/Theme.EasyMute"
+        android:allowBackup="true">
 
+        <service
+            android:enabled="true"
+            android:name="com.velocicrafted.easymute.NotificationHandler" />
 
         <activity
             android:name=".MainActivity"
@@ -24,6 +33,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity">
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+
     </application>
 
 </manifest>
