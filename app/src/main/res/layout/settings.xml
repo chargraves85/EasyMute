@@ -46,21 +46,6 @@
 
     <androidx.appcompat.widget.SwitchCompat
         android:enabled="false"
-        android:id="@+id/callLaunchAuto"
-        android:layout_width="360dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/launch_on_call_connection"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/premiumToggle" />
-
-    <androidx.appcompat.widget.SwitchCompat
-        android:enabled="false"
         android:id="@+id/timedUnmute"
         android:layout_width="360dp"
         android:layout_height="25dp"
@@ -105,11 +90,11 @@
         app:layout_constraintTop_toBottomOf="@+id/timedUnmute" />
 
     <androidx.appcompat.widget.SwitchCompat
-        android:enabled="false"
         android:id="@+id/callLaunchAsk"
         android:layout_width="360dp"
         android:layout_height="25dp"
         android:layout_marginTop="16dp"
+        android:enabled="false"
         android:text="@string/ask_to_launch_on_call_connection"
         android:textColor="@color/white"
         android:textSize="20sp"
@@ -117,7 +102,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/callLaunchAuto" />
+        app:layout_constraintTop_toBottomOf="@+id/premiumToggle" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/premiumToggle"
@@ -167,19 +152,5 @@
         app:layout_constraintHorizontal_bias="0.614"
         app:layout_constraintStart_toEndOf="@+id/rate"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Open Beta: Functionality of this page is under construction."
-        android:textAlignment="center"
-        android:textColor="#F86060"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/holdToMute" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

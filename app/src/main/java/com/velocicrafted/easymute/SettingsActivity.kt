@@ -1,8 +1,8 @@
 package com.velocicrafted.easymute
 
-import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
+import android.Manifest
+import android.app.*
+import android.content.*
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
@@ -12,13 +12,28 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import android.widget.Toast
 
-import android.content.ActivityNotFoundException
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
+import android.telephony.TelephonyManager
+import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
+import java.lang.IllegalArgumentException
+import android.content.Intent
 
 
-class SettingsActivity : AppCompatActivity()  {
+
+
+
+class SettingsActivity: AppCompatActivity() {
+
+    private val READ_PHONE_STATE_CODE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         val settings: SharedPreferences =
             applicationContext.getSharedPreferences("Settings", MODE_PRIVATE)
@@ -28,23 +43,21 @@ class SettingsActivity : AppCompatActivity()  {
 
         // get our switches
         val premiumToggle = findViewById<SwitchCompat>(R.id.premiumToggle)
-        val autoLaunchOnCallToggle = findViewById<SwitchCompat>(R.id.callLaunchAuto)
         val askLaunchOnCallToggle = findViewById<SwitchCompat>(R.id.callLaunchAsk)
         val minimizeMuteToggle = findViewById<SwitchCompat>(R.id.minimizeMute)
         val timedUnmuteToggle = findViewById<SwitchCompat>(R.id.timedUnmute)
         val holdToMuteToggle = findViewById<SwitchCompat>(R.id.holdToMute)
-        
+
+        val notificationIntent = Intent(this, NotificationHandler::class.java)
+
         // settings strings as vars to reduce errors
         val premiumEnabled= "premiumEnabled"
-        val autoLaunch = "autoLaunch"
         val askLaunch = "askLaunch"
         val minimizeMute = "minimizeMute"
         val timedUnmute = "timedUnmute"
         val holdToMute = "holdToMute"
 
-        if (settings.getBoolean(autoLaunch, false)) {
-            autoLaunchOnCallToggle.isChecked = true
-        }
+
         if (settings.getBoolean(askLaunch, false)) {
             askLaunchOnCallToggle.isChecked = true
         }
@@ -62,7 +75,6 @@ class SettingsActivity : AppCompatActivity()  {
         if (settings.getBoolean(premiumEnabled, false)) {
             premiumToggle.isChecked = true
             premiumToggle.isEnabled = false
-            autoLaunchOnCallToggle.isEnabled = true
             askLaunchOnCallToggle.isEnabled = true
             minimizeMuteToggle.isEnabled = true
             timedUnmuteToggle.isEnabled = true
@@ -79,7 +91,6 @@ class SettingsActivity : AppCompatActivity()  {
             if (settings.getBoolean(premiumEnabled, false)) {
                 premiumToggle.isChecked = false
                 premiumToggle.isEnabled = false
-                autoLaunchOnCallToggle.isEnabled = true
                 askLaunchOnCallToggle.isEnabled = true
                 minimizeMuteToggle.isEnabled = true
                 timedUnmuteToggle.isEnabled = true
@@ -89,23 +100,13 @@ class SettingsActivity : AppCompatActivity()  {
             }
         }
 
-        autoLaunchOnCallToggle.setOnClickListener {
-            if (!settings.getBoolean(autoLaunch, false)) {
-                settings.edit().putBoolean(autoLaunch, true).apply()
-                settings.edit().putBoolean(askLaunch, false).apply()
-                askLaunchOnCallToggle.isChecked = false
-            } else {
-                settings.edit().putBoolean(autoLaunch, false).apply()
-            }
-        }
-
         askLaunchOnCallToggle.setOnClickListener {
             if (!settings.getBoolean(askLaunch, false)) {
                 settings.edit().putBoolean(askLaunch, true).apply()
-                settings.edit().putBoolean(autoLaunch, false).apply()
-                autoLaunchOnCallToggle.isChecked = false
+                startService(notificationIntent)
             } else {
                 settings.edit().putBoolean(askLaunch, false).apply()
+                stopService(notificationIntent)
             }
         }
 
@@ -172,6 +173,40 @@ class SettingsActivity : AppCompatActivity()  {
         runBlocking {
             launch {
                 IAPController(thisActivity, applicationContext).connectToBilling()
+            }
+        }
+    }
+
+    ///// Permissions Management
+
+    private fun setupPermissions() {
+        val permission = ContextCompat.checkSelfPermission(this,
+            Manifest.permission.READ_PHONE_STATE)
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            Log.v("PERMISSIONS", "DENIED")
+            makeRequest()
+        }
+    }
+
+    private fun makeRequest() {
+        ActivityCompat.requestPermissions(this,
+            arrayOf(Manifest.permission.READ_PHONE_STATE),
+            READ_PHONE_STATE_CODE)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int,
+                                            permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            100 -> {
+
+                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+
+                    Log.i("Permissions", "Permission has been denied by user")
+                } else {
+                    Log.i("Permissions", "Permission has been granted by user")
+                }
             }
         }
     }
