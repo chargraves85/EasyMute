@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
 
-class NotificationHandler() : Service() {
+class NotificationHandler : Service() {
 
     private val receiver = createBroadCastReceiver()
     private val channelId = "default"
@@ -23,6 +23,7 @@ class NotificationHandler() : Service() {
         super.onCreate()
         createNotificationChannel()
         registerReceiver()
+        startForeground(1, foregroundNotification())
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -46,8 +47,8 @@ class NotificationHandler() : Service() {
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create the NotificationChannel
-            val name = "getString(R.string.channel_name)"
-            val descriptionText = "getString(R.string.channel_description)"
+            val name = "EasyMute Notification Channel"
+            val descriptionText = "Providing notifications for the EasyMute application."
             val importance = NotificationManager.IMPORTANCE_HIGH
             val mChannel = NotificationChannel(channelId, name, importance)
             mChannel.description = descriptionText
@@ -120,6 +121,17 @@ class NotificationHandler() : Service() {
         } catch (e: IllegalArgumentException) {
             Log.i("broadcastreceiver", "$e")
         }
+    }
+
+    private fun foregroundNotification(): Notification {
+        val notificationIntent = Intent(this, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)// 1
+        return NotificationCompat.Builder(this, channelId)
+            .setContentTitle("EasyMute Launch Service")
+            .setContentText("EasyMute \"Ask to Launch on Call\" service is running.")
+            .setSmallIcon(R.drawable.arrow_up_float)
+            .setContentIntent(pendingIntent)
+            .build()
     }
 
 }

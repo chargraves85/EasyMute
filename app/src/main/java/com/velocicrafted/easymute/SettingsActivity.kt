@@ -101,6 +101,7 @@ class SettingsActivity: AppCompatActivity() {
         }
 
         askLaunchOnCallToggle.setOnClickListener {
+            setupPermissions()
             if (!settings.getBoolean(askLaunch, false)) {
                 settings.edit().putBoolean(askLaunch, true).apply()
                 startService(notificationIntent)
