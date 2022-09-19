@@ -125,7 +125,8 @@ class NotificationHandler : Service() {
 
     private fun foregroundNotification(): Notification {
         val notificationIntent = Intent(this, MainActivity::class.java)
-        val pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0)// 1
+        val pendingIntent = PendingIntent.getActivity(this, 0,
+            notificationIntent, PendingIntent.FLAG_IMMUTABLE)
         return NotificationCompat.Builder(this, channelId)
             .setContentTitle("EasyMute Launch Service")
             .setContentText("EasyMute \"Ask to Launch on Call\" service is running.")
