@@ -12,12 +12,18 @@ import androidx.lifecycle.LifecycleOwner
 class AppLifecycleListener(private val toggle: MuteToggle, private val window: Window, private val baseContext: Context) :
     DefaultLifecycleObserver {
 
-    // Umute microphone if the app is moved from the foreground
+    private val settings = baseContext.getSharedPreferences("Settings", Context.MODE_PRIVATE)
+
+    // Unmute microphone if the app is moved from the foreground
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onStop(owner: LifecycleOwner) {
-        window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
-        toggle.unmute()
-        Toast.makeText(baseContext, "App moving to background. Unmuting microphone.", Toast.LENGTH_SHORT).show()
+
+        if (!settings.getBoolean("minimizeMute", false)) {
+            window.clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+            toggle.unmute()
+            Toast.makeText(baseContext, "App moving to background. Unmuting microphone.", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     // Do not keep screen on if app isn't in foreground

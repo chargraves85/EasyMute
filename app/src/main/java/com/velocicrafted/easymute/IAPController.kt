@@ -120,7 +120,7 @@ class IAPController(private val activity: Activity, private val context: Context
                     .setPurchaseToken(purchase.purchaseToken)
                 runBlocking {
                     launch {
-                        val ackPurchaseResult = withContext(Dispatchers.IO) {
+                        withContext(Dispatchers.IO) {
                             billingClient.acknowledgePurchase(acknowledgePurchaseParams.build(), ackListener)
                         }
                     }
