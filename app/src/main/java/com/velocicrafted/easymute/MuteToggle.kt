@@ -69,6 +69,19 @@ class MuteToggle(private val image: ImageView, private val text: TextView, priva
         }
     }
 
+    fun isMuted(): Boolean {
+        if (checkSelfPermissionCompat(Manifest.permission.MODIFY_AUDIO_SETTINGS) == PackageManager.PERMISSION_GRANTED) {
+            return audioManager.isMicrophoneMute
+        } else {
+            // Permission is missing and must be requested.
+            Toast.makeText(baseContext, "This app requires permission to modify audio settings.", Toast.LENGTH_SHORT).show()
+            requestPermissionsCompat(arrayOf(Manifest.permission.MODIFY_AUDIO_SETTINGS),
+                MODIFY_AUDIO_SETTINGS
+            )
+        }
+        return false
+    }
+
     private fun checkSelfPermissionCompat(permission: String) =
         ActivityCompat.checkSelfPermission(baseContext, permission)
 

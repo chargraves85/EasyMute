@@ -61,7 +61,7 @@ class SettingsActivity: AppCompatActivity() {
         if (settings.getBoolean(askLaunch, false)) {
             askLaunchOnCallToggle.isChecked = true
         }
-        if (settings.getBoolean(minimizeMute, true)) {
+        if (settings.getBoolean(minimizeMute, false)) {
             minimizeMuteToggle.isChecked = true
         }
         if (settings.getBoolean(timedUnmute, false)) {
